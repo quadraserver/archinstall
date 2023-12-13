@@ -133,7 +133,7 @@ cp /archinstall/snapshot.sh /home/$username
 # ------------------------------------------------------
 # Clear archinstall directory in / 
 # ------------------------------------------------------
-rm -R /archinstall
+# rm -R /archinstall
 
 clear
 echo ""
@@ -145,6 +145,7 @@ echo "- zram swap: 4-zram.sh"
 echo "- timeshift snapshot tool: 5-timeshift.sh"
 echo "- preload application cache: 6-preload.sh"
 echo "- KVM-virtualisation script: 7-kvm.sh"
+echo "- snapshot.sh"
 echo ""
 echo "Please reboot."
 echo ""
