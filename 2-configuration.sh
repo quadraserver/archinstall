@@ -11,10 +11,13 @@
 # recreated by Thomas Lange (2023) 
 # ------------------------------------------------------
 clear
-keyboardlayout="de-latin1"
-zoneinfo="Europe/Berlin"
-hostname="lorraine"
-username="raabe"
+read -p "Please enter your desired keyboard (i.e. de-latin1): " keyboardlayout
+echo ""
+read -p "Please enter your timezone (i.e. /Europe/Berlin): " zoneinfo
+echo ""
+read -p "Please enter the hostname of your machine: " hostname
+echo ""
+read -p "Please enter your desired username: " username
 
 # ------------------------------------------------------
 # Set System Time
@@ -25,7 +28,7 @@ hwclock --systohc
 # ------------------------------------------------------
 # Update reflector
 # ------------------------------------------------------
-echo "Start reflector..."
+echo "Starting reflector... (this can take a while)"
 reflector -c "Germany," -p https -a 3 --sort rate --save /etc/pacman.d/mirrorlist
 
 # ------------------------------------------------------
@@ -36,20 +39,21 @@ pacman -Syy
 # ------------------------------------------------------
 # Install Packages
 # ------------------------------------------------------
-pacman --noconfirm -S grub xdg-desktop-portal-wlr efibootmgr networkmanager network-manager-applet dialog wpa_supplicant mtools dosfstools base-devel linux-headers avahi xdg-user-dirs xdg-utils gvfs gvfs-smb nfs-utils inetutils dnsutils bluez bluez-utils cups hplip alsa-utils pipewire pipewire-alsa pipewire-pulse pipewire-jack bash-completion openssh rsync reflector acpi acpi_call dnsmasq openbsd-netcat ipset firewalld flatpak sof-firmware nss-mdns acpid os-prober ntfs-3g terminus-font exa bat htop ranger zip unzip neofetch duf xorg xorg-xinit xclip grub-btrfs xf86-video-amdgpu xf86-video-nouveau xf86-video-intel xf86-video-qxl brightnessctl pacman-contrib inxi
+pacman --noconfirm -S linux-headers efibootmgr dosfstools gptfdisk ntfs-3g os-prober grub grub-btrfs networkmanager network-manager-applet nm-connection-editor firefox firefox-i18n-de thunderbird thunderbird-i18n-de acpid acpi acpi_call dbus dialog wpa_supplicant mtools avahi nfs-utils inetutils dnsmasq openbsd-netcat ipset firewalld flatpak sof-firmware dnsutils xdg-desktop-portal-wlr xdg-user-dirs xdg-utils gvfs gvfs-smb bluez bluez-utils cups hplip alsa-utils pipewire pipewire-alsa pipewire-pulse pipewire-jack bash-completion terminus-font htop neofetch mc zip unzip xarchiver p7zip nss-mdns exa bat duf xorg xorg-xinit xclip xf86-video-amdgpu xf86-video-nouveau xf86-video-intel xf86-video-qxl brightnessctl pacman-contrib inxi lvm2 wget git gcc ruby go ranger xorg-server libreoffice-fresh libreoffice-fresh-de hunspell-de mpc mpd mpv cmatrix asciiquarium notepadqq thunar thunar-archive-plugin pavucontrol lxappearance qt5ct
 
 # ------------------------------------------------------
-# set lang utf8 US
+# set language to de_DE.UTF-8
 # ------------------------------------------------------
-echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+echo "de_DE.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
-echo "LANG=en_US.UTF-8" >> /etc/locale.conf
+echo "LANG=de_DE.UTF-8" >> /etc/locale.conf
 
 # ------------------------------------------------------
-# Set Keyboard
+# Set Keyboard and font for personal preference
 # ------------------------------------------------------
-echo "FONT=ter-v18n" >> /etc/vconsole.conf
 echo "KEYMAP=$keyboardlayout" >> /etc/vconsole.conf
+echo "FONT=ter-120b" >> /etc/vconsole.conf
+
 
 # ------------------------------------------------------
 # Set hostname and localhost
@@ -70,7 +74,7 @@ passwd root
 # Add User
 # ------------------------------------------------------
 echo "Add user $username"
-useradd -m -G wheel $username
+useradd -m -g users -G wheel,audio,video,games,power -s /bin/bash $username
 passwd $username
 
 # ------------------------------------------------------
@@ -89,7 +93,9 @@ systemctl enable acpid
 # ------------------------------------------------------
 # Grub installation
 # ------------------------------------------------------
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB --removable
+echo "Installing Grub."
+echo ""
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id="Arch Linux" --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # ------------------------------------------------------
@@ -109,31 +115,37 @@ echo "Before: #%wheel ALL=(ALL:ALL) ALL"
 echo "After:  %wheel ALL=(ALL:ALL) ALL"
 echo ""
 read -p "Open sudoers now?" c
-EDITOR=vim sudo -E visudo
-usermod -aG wheel $username
+EDITOR=nano sudo -E visudo
+# usermod -aG wheel $username
 
 # ------------------------------------------------------
 # Copy installation scripts to home directory 
 # ------------------------------------------------------
-cp /archinstall/3-yay.sh /home/$username
-cp /archinstall/4-zram.sh /home/$username
-cp /archinstall/5-timeshift.sh /home/$username
-cp /archinstall/6-preload.sh /home/$username
+mkdir -p /home/$username/scripts
+cp /archinstall/3-yay.sh /home/$username/scripts
+cp /archinstall/4-zram.sh /home/$username/scripts
+cp /archinstall/5-timeshift.sh /home/$username/scripts
+cp /archinstall/6-preload.sh /home/$username/scripts
+cp /archinstall/7-kvm.sh /home/$username/scripts
+cp /archinstall/snapshot.sh /home/$username/scripts
 cp /archinstall/snapshot.sh /home/$username
 
+# ------------------------------------------------------
+# Clear archinstall directory in / 
+# ------------------------------------------------------
+rm -R /archinstall
+
 clear
-echo "     _                   "
-echo "  __| | ___  _ __   ___  "
-echo " / _' |/ _ \| '_ \ / _ \ "
-echo "| (_| | (_) | | | |  __/ "
-echo " \__,_|\___/|_| |_|\___| "
-echo "                         "
 echo ""
-echo "Please find the following additional installation scripts in your home directory:"
-echo "- yay AUR helper: 3-yay.sh"
+echo "Done."
+echo ""
+echo "You can find the following scripts in the scripts-directory of your home folder:"
+echo "- yay: 3-yay.sh"
 echo "- zram swap: 4-zram.sh"
 echo "- timeshift snapshot tool: 5-timeshift.sh"
 echo "- preload application cache: 6-preload.sh"
+echo "- KVM-virtualisation script: 7-kvm.sh"
 echo ""
-echo "Please exit & shutdown (shutdown -h now), remove the installation media and start again."
-echo "Important: Activate WIFI after restart with nmtui."
+echo "Please reboot."
+echo ""
+echo "Have fun."

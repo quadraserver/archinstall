@@ -34,10 +34,7 @@ timedatectl set-ntp true
 mkfs.vfat -F 32 /dev/$efidrive
 mkfs.ext4 /dev/$bootdrive
 
-
-
 mkfs.btrfs -f /dev/$rootdrive
-
 
 # ------------------------------------------------------
 # Mount points for btrfs
@@ -51,23 +48,31 @@ btrfs su cr /mnt/@log
 umount /mnt
 
 mount -o compress=zstd:1,noatime,subvol=@ /dev/$rootdrive /mnt
+
 mkdir -p /mnt/{boot/efi,home,.snapshots,var/{cache,log}}
+
+mount /dev/$bootdrive /mnt/boot
+mount /dev/$efidrive /mnt/boot/efi
+
 mkdir -p /mnt/media/{Windows,Daten,Spiele,Installation,Backup}
+
 mount -o compress=zstd:1,noatime,subvol=@cache /dev/$rootdrive /mnt/var/cache
 mount -o compress=zstd:1,noatime,subvol=@home /dev/$rootdrive /mnt/home
 mount -o compress=zstd:1,noatime,subvol=@log /dev/$rootdrive /mnt/var/log
 mount -o compress=zstd:1,noatime,subvol=@snapshots /dev/$rootdrive /mnt/.snapshots
-mount /dev/$sda1 /mnt/boot/efi
 
 # ------------------------------------------------------
 # Install base packages
 # ------------------------------------------------------
-pacstrap -K /mnt base base-devel git linux linux-firmware vim openssh reflector rsync amd-ucode
+pacstrap -K /mnt base base-devel linux linux-firmware dhcpcd nano git openssh reflector rsync intel-ucode
 
 # ------------------------------------------------------
 # Generate fstab
 # ------------------------------------------------------
 genfstab -U /mnt >> /mnt/etc/fstab
+
+echo "This is your fstab:"
+
 cat /mnt/etc/fstab
 
 # ------------------------------------------------------
@@ -79,6 +84,7 @@ cp 3-yay.sh /mnt/archinstall/
 cp 4-zram.sh /mnt/archinstall/
 cp 5-timeshift.sh /mnt/archinstall/
 cp 6-preload.sh /mnt/archinstall/
+cp 7-kvm.sh /mnt/archinstall
 cp snapshot.sh /mnt/archinstall/
 
 # ------------------------------------------------------
