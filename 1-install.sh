@@ -10,7 +10,7 @@ echo " / ___ \| | | (__| | | |  | || | | \__ \ || (_| | | |"
 echo "/_/   \_\_|  \___|_| |_| |___|_| |_|___/\__\__,_|_|_|"
 echo ""
 echo "-----------------------------------------------------"
-echo " STAGE 1"
+echo " STAGE 1 - First of all, without encrypting, for testing ..."
 echo "-----------------------------------------------------"
 echo ""
 echo "These are your drives:"
@@ -45,16 +45,16 @@ btrfs su cr /mnt/@cache
 btrfs su cr /mnt/@home
 btrfs su cr /mnt/@snapshots
 btrfs su cr /mnt/@log
+mkdir -p /mnt/@/archinstall
+mkdir -p /mnt/@/media/{Windows,Daten,Spiele,Installation,Backup}
 umount /mnt
 
 mount -o compress=zstd:1,noatime,subvol=@ /dev/$rootdrive /mnt
 
 mkdir -p /mnt/{boot/efi,home,.snapshots,var/{cache,log}}
 
-mount /dev/$bootdrive /mnt/boot
-mount /dev/$efidrive /mnt/boot/efi
-
-mkdir -p /mnt/media/{Windows,Daten,Spiele,Installation,Backup}
+mount -o subvol=@ /dev/$bootdrive /mnt/boot
+mount -o subvol=@ /dev/$efidrive /mnt/boot/efi
 
 mount -o compress=zstd:1,noatime,subvol=@cache /dev/$rootdrive /mnt/var/cache
 mount -o compress=zstd:1,noatime,subvol=@home /dev/$rootdrive /mnt/home
@@ -72,13 +72,12 @@ pacstrap -K /mnt base base-devel linux linux-firmware dhcpcd nano git openssh re
 genfstab -U /mnt >> /mnt/etc/fstab
 
 echo "This is your fstab:"
-
+echo ""
 cat /mnt/etc/fstab
 
 # ------------------------------------------------------
 # Install configuration scripts
 # ------------------------------------------------------
-mkdir /mnt/archinstall
 cp 2-configuration.sh /mnt/archinstall/
 cp 3-yay.sh /mnt/archinstall/
 cp 4-zram.sh /mnt/archinstall/
