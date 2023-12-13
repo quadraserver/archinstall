@@ -36,11 +36,11 @@ while true; do
     echo "--------------------------------------------"
     echo "  Answering [Yy] will open cfdisk for you,"
     echo "  answer with [Nn], if your drive"
-    read -p "  is already partitioned" yn
+    read -p "  is already partitioned. " yn
     case $yn in
         [Yy]* ) cfdisk /dev/$drive; break;;
         [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
+        * ) echo "Please answer yes or no. [Yy/Nn] ";;
     esac
 done
 pacman-key --init
