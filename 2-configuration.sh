@@ -129,11 +129,12 @@ cp /archinstall/6-preload.sh /home/$username/scripts
 cp /archinstall/7-kvm.sh /home/$username/scripts
 cp /archinstall/snapshot.sh /home/$username/scripts
 cp /archinstall/snapshot.sh /home/$username
+chown -R /home/$username/scripts
 
 # ------------------------------------------------------
 # Clear archinstall directory in / 
 # ------------------------------------------------------
-# rm -R /archinstall
+rm -R /archinstall
 
 clear
 echo ""
