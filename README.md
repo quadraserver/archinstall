@@ -1,4 +1,8 @@
 # Arch Linux install script (LUKS and BTRFS)
+
+ATTENTION: Not useable in the moment, since I am working still on it.
+when it becomes ready, I will remove this reminder.
+
 Here is my arch installation script for my personal use. 
 
 This sets up an Arch Linux System as described below.
