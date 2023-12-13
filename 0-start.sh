@@ -49,5 +49,5 @@ pacman -Syy
 pacman -Sy archlinux-keyring git
 cd /root
 git clone https://www.github.com/quadraserver/archinstall.git
-cd archinstall
+cd /root/archinstall
 ./1-install.sh
