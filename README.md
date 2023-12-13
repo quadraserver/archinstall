@@ -1,7 +1,8 @@
 # Arch Linux install script (LUKS and BTRFS)
 
-ATTENTION: Not useable in the moment, since I am working still on it.
-when it becomes ready, I will remove this reminder.
+ATTENTION / WIP: Not fully useable by now, since I am working still on it. <br>
+The Script is already working, but it lacks still the encryption method. <br>
+When it becomes ready, I will remove this reminder.
 
 Here is my arch installation script for my personal use. 
 
