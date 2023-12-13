@@ -45,8 +45,8 @@ while true; do
 done
 pacman-key --init
 pacman-key --populate archlinux
-pacman -Sy
-pacman -S archlinux-keyring git
+pacman -Syy
+pacman -Sy archlinux-keyring git
 cd /root
 git clone https://www.github.com/quadraserver/archinstall.git
 cd archinstall
