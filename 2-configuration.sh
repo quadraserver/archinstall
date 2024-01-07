@@ -35,7 +35,7 @@ pacman -Syy
 # ------------------------------------------------------
 # Install Packages
 # ------------------------------------------------------
-pacman --noconfirm -S linux-headers efibootmgr dosfstools gptfdisk ntfs-3g os-prober grub grub-btrfs networkmanager network-manager-applet nm-connection-editor firefox firefox-i18n-de thunderbird thunderbird-i18n-de acpid acpi acpi_call dbus dialog wpa_supplicant mtools avahi nfs-utils inetutils dnsmasq openbsd-netcat ipset firewalld flatpak sof-firmware dnsutils xdg-desktop-portal-wlr xdg-user-dirs xdg-utils gvfs gvfs-smb bluez bluez-utils cups hplip alsa-utils pipewire pipewire-alsa pipewire-pulse pipewire-jack bash-completion terminus-font htop neofetch mc zip unzip xarchiver p7zip nss-mdns exa bat duf xorg xorg-xinit xclip xf86-video-amdgpu xf86-video-nouveau xf86-video-intel xf86-video-qxl brightnessctl pacman-contrib inxi lvm2 wget git gcc ruby go xorg-server libreoffice-fresh libreoffice-fresh-de hunspell-de mpc mpd mpv cmatrix asciiquarium notepadqq thunar thunar-archive-plugin pavucontrol lxappearance qt5ct xfce4 xfce4-goodies sddm
+pacman --noconfirm -S linux-headers efibootmgr dosfstools gptfdisk ntfs-3g os-prober grub grub-btrfs networkmanager network-manager-applet nm-connection-editor firefox firefox-i18n-de thunderbird thunderbird-i18n-de acpid acpi acpi_call dbus dialog wpa_supplicant mtools avahi nfs-utils inetutils dnsmasq openbsd-netcat ipset firewalld flatpak sof-firmware dnsutils xdg-desktop-portal-wlr xdg-user-dirs xdg-utils gvfs gvfs-smb bluez bluez-utils cups hplip alsa-utils pipewire pipewire-alsa pipewire-pulse pipewire-jack bash-completion terminus-font htop neofetch mc zip unzip xarchiver p7zip nss-mdns exa bat duf xorg xorg-xinit xclip xf86-video-amdgpu xf86-video-nouveau xf86-video-intel xf86-video-qxl brightnessctl pacman-contrib inxi lvm2 wget git gcc ruby go xorg-server libreoffice-fresh libreoffice-fresh-de hunspell-de mpc mpd mpv cmatrix asciiquarium notepadqq thunar thunar-archive-plugin pavucontrol lxappearance qt5ct xfce4 xfce4-goodies kitty foot
 
 # ------------------------------------------------------
 # set language to de_DE.UTF-8
@@ -112,29 +112,29 @@ echo ""
 read -p "Open sudoers now?" c
 EDITOR=nano sudo -E visudo
 clear
-echo
-echo "Creating sddm.conf in /etc"
-echo
-sddm --example-config >> /etc/sddm.conf
-echo "Done."
-echo "Downloading and copying "
-echo "sugar-candy theme to /usr/share/sddm/themes"
-git clone https://www.github.com/quadraserver/sddm.git
-cd sddm
-chmod +x install-theme.sh
-./install-theme.sh
-cd ..
-echo 
-echo "Done."
-echo
-echo " Please change theme in sddm.conf to "
-echo " -->sugar-candy<-- and save it!"
-nano /etc/sddm.conf
-echo
-echo "Done."
-echo
-echo "Activating sddm on next reboot now..."
-systemctl enable sddm
+#echo
+#echo "Creating sddm.conf in /etc"
+#echo
+#sddm --example-config >> /etc/sddm.conf
+#echo "Done."
+#echo "Downloading and copying "
+#echo "sugar-candy theme to /usr/share/sddm/themes"
+#git clone https://www.github.com/quadraserver/sddm.git
+#cd sddm
+#chmod +x install-theme.sh
+#./install-theme.sh
+#cd ..
+#echo 
+#echo "Done."
+#echo
+#echo " Please change theme in sddm.conf to "
+#echo " -->sugar-candy<-- and save it!"
+#nano /etc/sddm.conf
+#echo
+#echo "Done."
+#echo
+#echo "Activating sddm on next reboot now..."
+#systemctl enable sddm
 # ------------------------------------------------------
 # Copy installation scripts to home directory 
 # ------------------------------------------------------
