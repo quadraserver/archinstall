@@ -20,34 +20,32 @@ echo "---------------------------------------------------------------------"
 echo "  This is STAGE 0."
 echo "---------------------------------------------------------------------"
 echo ""
-echo "This script is about to install Arch Linux with LUKS and BTRFS"
-echo ""
 echo "These are your drives:"
 echo ""
 lsblk
 echo ""
 ## Question
-read -p "  What is your drive? (eg. sda): " drive
+read -p "  What is your drive? (eg. sda or nvme0n1): " drive
 echo ""
 echo "  thank you."
 echo ""
 while true; do
     echo "  Do you need to partition your drive?"
     echo "--------------------------------------------"
-    echo "  Answering [Yy] will open cfdisk for you,"
-    echo "  answer with [Nn], if your drive"
+    echo "  Answering [Y] will open cfdisk for you,"
+    echo "  answer with [N], if your drive"
     read -p "  is already partitioned. " yn
     case $yn in
         [Yy]* ) cfdisk /dev/$drive; break;;
         [Nn]* ) exit;;
-        * ) echo "Please answer yes or no. [Yy/Nn] ";;
+        * ) echo "Please answer yes or no. [Y/N] ";;
     esac
 done
 pacman-key --init
 pacman-key --populate archlinux
 pacman -Syy
 pacman -Sy archlinux-keyring git
-cd /root
+cd
 git clone https://www.github.com/quadraserver/archinstall.git
-cd /root/archinstall
+cd archinstall
 ./1-install.sh
