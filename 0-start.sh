@@ -38,14 +38,7 @@ while true; do
     case $yn in
         [Yy]* ) cfdisk /dev/$drive; break;;
         [Nn]* ) exit;;
-        * ) echo "Please answer yes or no. [Y/N] ";;
+        * ) echo "Please answer yes or no. [y/n] ";;
     esac
 done
-pacman-key --init
-pacman-key --populate archlinux
-pacman -Syy
-pacman -Sy archlinux-keyring git
-cd
-git clone https://www.github.com/quadraserver/archinstall.git
-cd archinstall
 ./1-install.sh
