@@ -17,18 +17,15 @@ lsblk
 # ------------------------------------------------------
 read -p "Enter the name of the EFI partition (eg. sda1): " efidrive
 read -p "Enter the name of the ROOT partition (eg. sda3): " rootdrive
-
 # ------------------------------------------------------
 # Sync time
 # ------------------------------------------------------
 timedatectl set-ntp true
-
 # ------------------------------------------------------
 # Format partitions
 # ------------------------------------------------------
 mkfs.vfat -F 32 /dev/$efidrive
-mkfs.ext4 /dev/$bootdrive
-
+mkfs.btrfs /dev/$rootdrive
 # ------------------------------------------------------
 # Mount points for btrfs
 # ------------------------------------------------------
@@ -41,32 +38,24 @@ btrfs su cr /mnt/@log
 mkdir -p /mnt/@/archinstall
 mkdir -p /mnt/@/media/{Windows,Daten,Installation,Voidlinux}
 umount /mnt
-
 mount -o compress=zstd:1,noatime,subvol=@ /dev/$rootdrive /mnt
-
 mkdir -p /mnt/{boot/efi,home,.snapshots,var/{cache,log}}
-
 mount /dev/$efidrive /mnt/boot/efi
-
 mount -o compress=zstd:1,noatime,subvol=@cache /dev/$rootdrive /mnt/var/cache
 mount -o compress=zstd:1,noatime,subvol=@home /dev/$rootdrive /mnt/home
 mount -o compress=zstd:1,noatime,subvol=@log /dev/$rootdrive /mnt/var/log
 mount -o compress=zstd:1,noatime,subvol=@snapshots /dev/$rootdrive /mnt/.snapshots
-
 # ------------------------------------------------------
 # Install base packages
 # ------------------------------------------------------
 pacstrap -K /mnt base base-devel linux linux-firmware dhcpcd nano git openssh reflector rsync intel-ucode amd-ucode
-
 # ------------------------------------------------------
 # Generate fstab
 # ------------------------------------------------------
 genfstab -U /mnt >> /mnt/etc/fstab
-
 echo "This is your fstab:"
 echo ""
 cat /mnt/etc/fstab
-
 # ------------------------------------------------------
 # Install configuration scripts
 # ------------------------------------------------------
@@ -77,9 +66,7 @@ cp 5-timeshift.sh /mnt/archinstall/
 cp 6-preload.sh /mnt/archinstall/
 #cp 7-kvm.sh /mnt/archinstall
 cp snapshot.sh /mnt/archinstall/
-
 # ------------------------------------------------------
 # Chroot to installed sytem
 # ------------------------------------------------------
 arch-chroot /mnt ./archinstall/2-configuration.sh
-
