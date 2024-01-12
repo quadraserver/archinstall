@@ -9,14 +9,16 @@ echo "  / _ \ | '__/ __| '_ \   | || '_ \/ __| __/ _' | | |"
 echo " / ___ \| | | (__| | | |  | || | | \__ \ || (_| | | |"
 echo "/_/   \_\_|  \___|_| |_| |___|_| |_|___/\__\__,_|_|_|"
 echo ""
+echo "                (C) 2024 Thomas Lange"
+echo ""
 echo "These are your drives:"
 echo ""
 lsblk
 # ------------------------------------------------------
 # Enter partition names
 # ------------------------------------------------------
-read -p "Enter the name of the EFI partition (eg. sda1): " efidrive
-read -p "Enter the name of the ROOT partition (eg. sda3): " rootdrive
+read -p "Enter the name of the EFI partition (eg. sdxx): " efidrive
+read -p "Enter the name of the ROOT partition (eg. sdxx): " rootdrive
 # ------------------------------------------------------
 # Sync time
 # ------------------------------------------------------
@@ -25,7 +27,7 @@ timedatectl set-ntp true
 # Format partitions
 # ------------------------------------------------------
 mkfs.vfat -F 32 /dev/$efidrive
-mkfs.btrfs /dev/$rootdrive
+mkfs.btrfs -f /dev/$rootdrive
 # ------------------------------------------------------
 # Mount points for btrfs
 # ------------------------------------------------------
@@ -36,7 +38,7 @@ btrfs su cr /mnt/@home
 btrfs su cr /mnt/@snapshots
 btrfs su cr /mnt/@log
 mkdir -p /mnt/@/archinstall
-mkdir -p /mnt/@/media/{Windows,Daten,Installation,Voidlinux}
+mkdir -p /mnt/@/media/{Windows,Installation}
 umount /mnt
 mount -o compress=zstd:1,noatime,subvol=@ /dev/$rootdrive /mnt
 mkdir -p /mnt/{boot/efi,home,.snapshots,var/{cache,log}}
