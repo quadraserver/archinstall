@@ -37,8 +37,8 @@ while true; do
     read -p "  is already partitioned. " yn
     case $yn in
         [Yy]* ) cfdisk /dev/$drive; break;;
-        [Nn]* ) exit;;
+        [Nn]* ) ./1-install.sh;;
         * ) echo "Please answer yes or no. [y/n] ";;
     esac
 done
-./1-install.sh
+#./1-install.sh
