@@ -34,7 +34,7 @@ pacman -Syy
 # ------------------------------------------------------
 # Install Packages
 # ------------------------------------------------------
-pacman --noconfirm -S linux-headers efibootmgr dosfstools gptfdisk ntfs-3g os-prober grub-btrfs networkmanager iwd network-manager-applet nm-connection-editor firefox firefox-i18n-de acpid acpi acpi_call dbus dialog wpa_supplicant mtools avahi nfs-utils inetutils dnsmasq openbsd-netcat ipset firewalld flatpak sof-firmware dnsutils xdg-desktop-portal-wlr xdg-user-dirs xdg-utils gvfs gvfs-smb bluez bluez-utils cups hplip alsa-utils pipewire pipewire-alsa pipewire-pulse pipewire-jack bash-completion terminus-font htop neofetch mc zip unzip xarchiver p7zip nss-mdns exa bat duf xorg xorg-xinit xclip xf86-video-amdgpu xf86-video-nouveau xf86-video-intel xf86-video-qxl brightnessctl pacman-contrib inxi lvm2 wget git gcc ruby go xorg-server mpc mpd mpv cmatrix asciiquarium notepadqq thunar thunar-archive-plugin pavucontrol lxappearance qt5ct xfce4 xfce4-goodies alacritty kitty foot gum sddm qt5-quickcontrols2 qt5-graphicaleffects swayfx polybar rofi picom feh nitrogen thunar thunar-archive-plugin xarchiver zip unzip p7zip lxappearance pcmanfm asciiquarium cmatrix mc neofetch htop btop vim neovim
+pacman --noconfirm -S linux-headers efibootmgr dosfstools gptfdisk plymouth ntfs-3g os-prober grub-btrfs networkmanager iwd network-manager-applet nm-connection-editor firefox firefox-i18n-de acpid acpi acpi_call dbus dialog wpa_supplicant mtools avahi nfs-utils inetutils dnsmasq openbsd-netcat ipset firewalld flatpak sof-firmware dnsutils xdg-desktop-portal-wlr xdg-user-dirs xdg-utils gvfs gvfs-smb bluez bluez-utils cups hplip alsa-utils pipewire pipewire-alsa pipewire-pulse pipewire-jack bash-completion terminus-font htop neofetch mc zip unzip xarchiver p7zip nss-mdns exa bat duf xorg xorg-xinit xclip xf86-video-amdgpu xf86-video-nouveau xf86-video-intel xf86-video-qxl brightnessctl pacman-contrib inxi lvm2 wget git gcc ruby go xorg-server mpc mpd mpv cmatrix asciiquarium notepadqq thunar thunar-archive-plugin pavucontrol lxappearance qt5ct xfce4 xfce4-goodies alacritty kitty foot gum sddm qt5-quickcontrols2 qt5-graphicaleffects polybar rofi picom feh nitrogen thunar thunar-archive-plugin xarchiver zip unzip p7zip lxappearance pcmanfm asciiquarium cmatrix mc neofetch htop btop vim neovim
 # ------------------------------------------------------
 # set language to de_DE.UTF-8
 # ------------------------------------------------------
@@ -150,7 +150,7 @@ echo "- yay: 3-yay.sh"
 echo "- zram swap: 4-zram.sh"
 echo "- timeshift snapshot tool: 5-timeshift.sh"
 echo "- preload application cache: 6-preload.sh"
-#echo "- KVM-virtualisation script: 7-kvm.sh"
+echo "- KVM-virtualisation script: 7-kvm.sh"
 echo "- snapshot.sh"
 echo ""
 echo "Please reboot."
